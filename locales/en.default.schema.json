@@ -31,7 +31,10 @@
     "sidebar": "Sidebar",
     "text": "Text",
     "theme": "Theme",
-    "typography": "Typography"
+    "typography": "Typography",
+    "logo": "Logo",
+    "logo_width": "Logo width",
+    "favicon": "Favicon"
   },
   "labels": {
     "alignment": "Alignment",
@@ -43,11 +46,20 @@
     "layout_direction": "Layout direction",
     "menu": "Menu",
     "padding": "Padding",
+    "image_padding": "Image Padding",
     "page_margin": "Page margin",
     "page_width": "Page width",
+    "space_between_section": "Space between template sections",
     "show_payment_icons": "Show payment icons",
     "text_style": "Text style",
-    "text": "Text"
+    "text": "Text",
+    "thickness": "Thickness",
+    "opacity": "Opacity",
+    "corner_radius": "Corner radius",
+    "horizontal_offset": "Horizontal offset",
+    "vertical_offset": "Vertical offset",
+    "blur": "Blur",
+    "color_scheme": "Color scheme"
   },
   "options": {
     "alignment": {
@@ -71,6 +83,99 @@
       "title": "Title",
       "subtitle": "Subtitle",
       "normal": "Normal text"
+    }
+  },
+  "settings_schema": {
+    "colors": {
+      "settings": {
+        "background": {
+          "label": "Background"
+        },
+        "text": {
+          "label": "Text color"
+        },
+        "background_gradient": {
+          "label": "Background gradient",
+          "info": "Background gradient replaces background where possible."
+        },
+        "heading_color": {
+          "label": "Heading color"
+        },
+        "button_background": {
+          "label": "Solid button background"
+        },
+        "button_label": {
+          "label": "Solid button labe"
+        },
+        "secondary_button_label": {
+          "label": "Outline button"
+        },
+        "shadow": {
+          "label": "Shadow"
+        }
+      }
     },
-  }
+    "buttons": {
+      "title": "Buttons"
+    },
+    "inputs": {
+      "title": "Inputs"
+    },
+    "cards": {
+      "title": "Product Cards"
+    },
+    "collection_cards": {
+      "title": "Collection Cards"
+    },
+    "blogs_cards": {
+      "title": "Blogs Cards"
+    },
+    "social": {
+      "title": "Social",
+      "settings":{
+        "facebook": {
+          "title": "Facebook",
+          "info": "https://www.facebook.com/"
+        },
+        "instagram": {
+          "title": "Instagram",
+          "info": "https://www.instagram.com/"
+        },
+        "youtube": {
+          "title": "YouTube",
+          "info": "https://www.youtube.com/"
+        },
+        "tiktok": {
+          "title": "TikTok",
+          "info": "https://www.tiktok.com/"
+        },
+        "twitter": {
+          "title": "X / Twitter",
+          "info": "https://www.twitter.com/"
+        },
+        "snapchat": {
+          "title": "Snapchat",
+          "info": "https://www.snapchat.com/"
+        },
+        "pinterest": {
+          "title": "Pinterest",
+          "info": "https://www.pinterest.com/"
+        },
+        "tumblr": {
+          "title": "Tumblr",
+          "info": "https://www.tumblr.com/"
+        },
+        "vimeo": {
+          "title": "Vimeo",
+          "info": "https://www.vimeo.com/"
+        }
+      }
+    }
+  },
+  "header":{
+    "border": "Border",
+    "shadow": "Shadow",
+    "inputs":"Inputs"
+},
 }
+
