@@ -28,7 +28,7 @@
 
 {% schema %}
 {
-  "name": "t:general.text",
+  "name": "t:blocks.text",
   "settings": [
     {
       "type": "text",
@@ -52,8 +52,28 @@
       "id": "alignment",
       "label": "t:labels.alignment",
       "default": "left"
-    }
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color Picker",
+      "default": "#000"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 12,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12,
+      "label": "Text Size",
+    },
   ],
-  "presets": [{ "name": "t:general.text" }]
+  "presets": [
+    { "name": "t:general.text" ,
+    "category": "t:categories.basic",
+    }
+  ]
 }
 {% endschema %}

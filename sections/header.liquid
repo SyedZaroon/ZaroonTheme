@@ -1,56 +1,529 @@
-<header>
-  <h2 class="header__title">
-    {{ shop.name | link_to: routes.root_url }}
-  </h2>
+<header class="header">
+  <div class="header__container">
+    <!-- Mobile Menu Button -->
+    <button class="header__mobile-toggle md:hidden" aria-label="Toggle mobile menu" id="mobile-menu-toggle">
+      <span class="header__hamburger"></span>
+      <span class="header__hamburger"></span>
+      <span class="header__hamburger"></span>
+    </button>
 
-  <div class="header__menu">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
+    <!-- Logo -->
+    <div class="header__logo">
+      {%- if settings.logo != blank -%}
+        <a href="{{ routes.root_url }}" class="header__logo-link">
+          <img 
+            src="{{ settings.logo | image_url }}" 
+            alt="{{ shop.name }}" 
+            width="auto"
+            height="auto"
+            class="header__logo-image"
+          >
+        </a>
+      {%- else -%}
+        <h2 class="header__title">
+          {{ shop.name | link_to: routes.root_url }}
+        </h2>
+      {%- endif -%}
+    </div>
 
-  <div class="header__icons">
-    {% if shop.customer_accounts_enabled %}
-      {{ 'icon-account.svg' | inline_asset_content | link_to: routes.account_url }}
-    {% endif %}
+    <!-- Desktop Navigation -->
+    <nav class="header__nav hidden md:flex">
+      <div class="header__menu">
+        {% for link in section.settings.menu.links %}
+          <a href="{{ link.url }}" class="header__menu-item">
+            {{ link.title }}
+          </a>
+        {% endfor %}
+      </div>
+    </nav>
 
-    <a href="{{ routes.cart_url }}">
-      {% if cart.item_count > 0 %}
-        <sup>{{ cart.item_count }}</sup>
+    <!-- Header Icons -->
+    <div class="header__icons">
+      {% if shop.customer_accounts_enabled %}
+        <a href="{{ routes.account_url }}" class="header__icon" aria-label="Account">
+          {{ 'icon-account.svg' | inline_asset_content }}
+        </a>
       {% endif %}
 
-      {{ 'icon-cart.svg' | inline_asset_content }}
-    </a>
+      <a href="{{ routes.cart_url }}" class="header__icon header__cart" aria-label="Cart">
+        {{ 'icon-cart.svg' | inline_asset_content }}
+        {% if cart.item_count > 0 %}
+          <span class="header__cart-count">{{ cart.item_count }}</span>
+        {% endif %}
+      </a>
+    </div>
   </div>
+
+  <!-- Mobile Navigation Menu -->
+  <nav class="header__mobile-nav" id="mobile-menu">
+    <div class="header__mobile-menu">
+      {% for link in section.settings.menu.links %}
+        <a href="{{ link.url }}" class="header__mobile-menu-item">
+          {{ link.title }}
+        </a>
+      {% endfor %}
+    </div>
+  </nav>
 </header>
 
 {% stylesheet %}
-  header {
-    height: 5rem;
+  /* ================================
+     HEADER BASE STYLES
+     ================================ */
+
+
+  .header__container {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 10px 0px;
   }
-  header a {
-    position: relative;
-    text-decoration: none;
+
+  /* ================================
+     MOBILE TOGGLE BUTTON
+     ================================ */
+  .header__mobile-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: var(--space-6);
+    height: var(--space-6);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: var(--z-index-dropdown);
+    transition: all var(--transition-fast);
+  }
+
+  .header__hamburger {
+    width: 100%;
+    height: 2px;
+    background-color: black;
+    border-radius: var(--radius-full);
+    transition: all var(--transition-fast);
+    transform-origin: center;
+    display: none;
+  }
+
+  /* Hamburger Animation */
+  .header__mobile-toggle.active .header__hamburger:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .header__mobile-toggle.active .header__hamburger:nth-child(2) {
+    opacity: 0;
+  }
+
+  .header__mobile-toggle.active .header__hamburger:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+  }
+
+  /* ================================
+     LOGO STYLES
+     ================================ */
+  .header__logo {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .header__logo-link {
+    display: block;
+    width: var(--main-logo-width, auto);
+    max-width: 150px;
+    transition: all var(--transition-fast);
+  }
+
+  .header__logo-link:hover {
+    transform: scale(1.02);
+  }
+
+  .header__logo-image {
+    width: 100%;
+    height: auto;
+    max-height: var(--space-10);
+    object-fit: contain;
+  }
+
+  .header__title {
+    margin: 0;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
     color: var(--color-foreground);
   }
-  header a sup {
-    position: absolute;
-    left: 100%;
-    overflow: hidden;
-    max-width: var(--page-margin);
+
+  .header__title a {
+    text-decoration: none;
+    color: inherit;
+    transition: color var(--transition-fast);
   }
-  header svg {
-    width: 2rem;
+
+  .header__title a:hover {
+    color: var(--color-primary);
   }
-  header .header__menu,
-  header .header__icons {
+
+  /* ================================
+     DESKTOP NAVIGATION
+     ================================ */
+  .header__nav {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .header__menu {
     display: flex;
-    gap: 1rem;
+    align-items: center;
+    gap: var(--space-6);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .header__menu-item {
+    position: relative;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-foreground);
+    text-decoration: none;
+    padding: var(--space-2) var(--space-1);
+    transition: all var(--transition-fast);
+    border-radius: var(--radius-base);
+  }
+
+  .header__menu-item:hover {
+    color: var(--color-primary);
+    background-color: var(--color-gray-50);
+  }
+
+  .header__menu-item::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-primary);
+    transition: all var(--transition-fast);
+    transform: translateX(-50%);
+  }
+
+  .header__menu-item:hover::after {
+    width: 100%;
+  }
+
+  /* ================================
+     HEADER ICONS
+     ================================ */
+  .header__icons {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+  }
+
+  .header__icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--space-10);
+    height: var(--space-10);
+    color: var(--color-foreground);
+    text-decoration: none;
+    border-radius: var(--radius-full);
+    transition: all var(--transition-fast);
+    background-color: transparent;
+  }
+
+  .header__icon:hover {
+    background-color: var(--color-gray-100);
+    color: var(--color-primary);
+    transform: scale(1.05);
+  }
+
+  .header__icon svg {
+    width: var(--space-5);
+    height: var(--space-5);
+  }
+
+  /* Cart Count Badge */
+  .header__cart-count {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--space-4);
+    height: var(--space-4);
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    border-radius: var(--radius-full);
+    padding: var(--space-0-5);
+    line-height: 1;
+  }
+
+  /* ================================
+     MOBILE NAVIGATION
+     ================================ */
+  .header__mobile-nav {
+    position: fixed;
+    top: var(--space-16);
+    left: 0;
+    right: 0;
+    background-color: var(--color-background);
+    border-bottom: 1px solid var(--color-gray-200);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-normal);
+    z-index: var(--z-index-dropdown);
+  }
+
+  .header__mobile-nav.active {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .header__mobile-menu {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-4);
+    gap: var(--space-1);
+  }
+
+  .header__mobile-menu-item {
+    display: block;
+    padding: var(--space-3) var(--space-4);
+    color: var(--color-foreground);
+    text-decoration: none;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-medium);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+  }
+
+  .header__mobile-menu-item:hover {
+    background-color: var(--color-gray-50);
+    color: var(--color-primary);
+    transform: translateX(var(--space-2));
+  }
+
+  /* ================================
+     RESPONSIVE BREAKPOINTS
+     ================================ */
+
+  /* Mobile First - Base styles above are for mobile */
+
+  /* Small screens and up (640px) */
+  @media (min-width: 640px) {
+
+    .header__logo {
+      flex: 0 0 auto;
+      justify-content: flex-start;
+    }
+  }
+
+  @media (max-width:768px){
+       .header__hamburger {
+    display: block;
+  }
+  }
+
+  /* Medium screens and up (768px) */
+  @media (min-width: 768px) {
+
+    .header__logo {
+      flex: 1;
+      justify-content: flex-start;
+    }
+
+ 
+
+    .header__nav {
+      flex: 2;
+    }
+
+    .header__icons {
+      flex: 1;
+      justify-content: flex-end;
+    }
+  }
+
+  /* Large screens and up (1024px) */
+  @media (min-width: 1024px) {
+
+    .header__menu {
+      gap: var(--space-8);
+    }
+
+    .header__menu-item {
+      font-size: var(--font-size-lg);
+      padding: var(--space-3) var(--space-2);
+    }
+
+    .header__logo-image {
+      max-height: var(--space-12);
+    }
+  }
+
+  /* Extra large screens (1280px) */
+
+  /* ================================
+     ACCESSIBILITY & INTERACTIONS
+     ================================ */
+
+  /* Focus states for keyboard navigation */
+  .header__mobile-toggle:focus,
+  .header__menu-item:focus,
+  .header__icon:focus,
+  .header__mobile-menu-item:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* Reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .header__mobile-toggle,
+    .header__hamburger,
+    .header__logo-link,
+    .header__menu-item,
+    .header__icon,
+    .header__mobile-nav,
+    .header__mobile-menu-item {
+      transition: none;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .header {
+      border-bottom-width: 2px;
+    }
+
+    .header__menu-item::after {
+      height: 3px;
+    }
+  }
+
+  /* Print styles */
+  @media print {
+    .header__mobile-toggle,
+    .header__mobile-nav {
+      display: none;
+    }
   }
 {% endstylesheet %}
+
+{% javascript %}
+  class ResponsiveHeader {
+    constructor() {
+      this.mobileToggle = document.getElementById('mobile-menu-toggle');
+      this.mobileMenu = document.getElementById('mobile-menu');
+      this.body = document.body;
+      this.isMenuOpen = false;
+      
+      this.init();
+    }
+
+    init() {
+      if (this.mobileToggle && this.mobileMenu) {
+        this.bindEvents();
+      }
+    }
+
+    bindEvents() {
+      // Toggle mobile menu
+      this.mobileToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.toggleMobileMenu();
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (this.isMenuOpen && 
+            !this.mobileMenu.contains(e.target) && 
+            !this.mobileToggle.contains(e.target)) {
+          this.closeMobileMenu();
+        }
+      });
+
+      // Close menu on escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && this.isMenuOpen) {
+          this.closeMobileMenu();
+          this.mobileToggle.focus();
+        }
+      });
+
+      // Close menu when clicking on mobile menu links
+      const mobileMenuLinks = this.mobileMenu.querySelectorAll('.header__mobile-menu-item');
+      mobileMenuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          this.closeMobileMenu();
+        });
+      });
+
+      // Handle window resize
+      window.addEventListener('resize', () => {
+        if (window.innerWidth >= 768 && this.isMenuOpen) {
+          this.closeMobileMenu();
+        }
+      });
+
+      // Prevent body scroll when menu is open
+      this.mobileMenu.addEventListener('touchmove', (e) => {
+        if (this.isMenuOpen) {
+          e.preventDefault();
+        }
+      });
+    }
+
+    toggleMobileMenu() {
+      if (this.isMenuOpen) {
+        this.closeMobileMenu();
+      } else {
+        this.openMobileMenu();
+      }
+    }
+
+    openMobileMenu() {
+      this.isMenuOpen = true;
+      this.mobileToggle.classList.add('active');
+      this.mobileToggle.setAttribute('aria-expanded', 'true');
+      this.mobileMenu.classList.add('active');
+      this.body.style.overflow = 'hidden';
+      
+      // Focus first menu item for accessibility
+      const firstMenuItem = this.mobileMenu.querySelector('.header__mobile-menu-item');
+      if (firstMenuItem) {
+        setTimeout(() => firstMenuItem.focus(), 100);
+      }
+    }
+
+    closeMobileMenu() {
+      this.isMenuOpen = false;
+      this.mobileToggle.classList.remove('active');
+      this.mobileToggle.setAttribute('aria-expanded', 'false');
+      this.mobileMenu.classList.remove('active');
+      this.body.style.overflow = '';
+    }
+  }
+
+  // Initialize when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    new ResponsiveHeader();
+  });
+
+  // Reinitialize on Shopify section load (for theme editor)
+  document.addEventListener('shopify:section:load', () => {
+    new ResponsiveHeader();
+  });
+{% endjavascript %}
 
 {% schema %}
 {

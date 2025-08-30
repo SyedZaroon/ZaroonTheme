@@ -1,18 +1,167 @@
 {% style %}
-  {% # Loads all font variantions with display: swap %}
+  {% # Load all font variations with display: swap %}
   {{ settings.type_primary_font | font_face: font_display: 'swap' }}
   {{ settings.type_primary_font | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
   {{ settings.type_primary_font | font_modify: 'weight', 'bold' | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
   {{ settings.type_primary_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
+  
+  {% # Load secondary font if different from primary %}
+  {% unless settings.type_secondary_font == settings.type_primary_font %}
+    {{ settings.type_secondary_font | font_face: font_display: 'swap' }}
+    {{ settings.type_secondary_font | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
+    {{ settings.type_secondary_font | font_modify: 'weight', 'bold' | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
+    {{ settings.type_secondary_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
+  {% endunless %}
 
   :root {
+    /* ================================
+       THEME SETTINGS INTEGRATION
+       All variables sync with theme customizer
+       ================================ */
+    
+    /* Logo Width */
+
+    --logo-width: {{ settings.logo_width }}px;
+    
+    /* Typography from theme settings */
     --font-primary--family: {{ settings.type_primary_font.family }}, {{ settings.type_primary_font.fallback_families }};
     --font-primary--style: {{ settings.type_primary_font.style }};
     --font-primary--weight: {{ settings.type_primary_font.weight }};
-    --page-width: {{ settings.max_page_width }};
-    --page-margin: {{ settings.min_page_margin }}px;
-    --color-background: {{ settings.background_color }};
-    --color-foreground: {{ settings.foreground_color }};
-    --style-border-radius-inputs: {{ settings.input_corner_radius }}px;
+    --font-secondary--family: {{ settings.type_secondary_font.family }}, {{ settings.type_secondary_font.fallback_families }};
+    --font-secondary--style: {{ settings.type_secondary_font.style }};
+    --font-secondary--weight: {{ settings.type_secondary_font.weight }};
+    
+    /* Typography scale from settings */
+    --font-size-body: {{ settings.body_font_size}}px;
+    --font-size-h1: {{ settings.h1_font_size | default: 36 }}px;
+    --font-size-h2: {{ settings.h2_font_size | default: 30 }}px;
+    --font-size-h3: {{ settings.h3_font_size | default: 24 }}px;
+    --line-height-body: {{ settings.line_height | default: 150 | divided_by: 100.0 }};
+    
+    /* Heading font weight mapping */
+    {% case settings.heading_font_weight %}
+      {% when 'normal' %}
+        --heading-font-weight: 400;
+      {% when 'medium' %}
+        --heading-font-weight: 500;
+      {% when 'semibold' %}
+        --heading-font-weight: 600;
+      {% when 'bold' %}
+        --heading-font-weight: 700;
+      {% when 'extrabold' %}
+        --heading-font-weight: 800;
+      {% else %}
+        --heading-font-weight: 700;
+    {% endcase %}
+    
+    /* Layout from theme settings */
+    --page-width: {{ settings.page_width | default: 1200 }}px;
+    --page-margin: {{ settings.min_page_margin | default: 20 }}px;
+    --space-between-sections: {{ settings.space_between_section | default: 0 }}px;
+    
+    /* Colors from color schemes - will be populated by Shopify's color scheme system */
+    --color-background: {{ settings.colors.background | default: '#FFFFFF' }};
+    --color-text: {{ settings.colors.text | default: '#242424' }};
+    --color-heading-color: {{ settings.colors.heading_color | default: '#FB740F' }};
+    --color-button: {{ settings.colors.button | default: '#FB740F' }};
+    --color-button-label: {{ settings.colors.button_label | default: '#FFFFFF' }};
+    --color-secondary-button-label: {{ settings.colors.secondary_button_label | default: '#FB740F' }};
+    --color-shadow: {{ settings.colors.shadow | default: '#242424' }};
+    
+    /* Button styling from settings */
+    --buttons-border-thickness: {{ settings.buttons_border_thickness | default: 1 }}px;
+    --buttons-border-opacity: {{ settings.buttons_border_opacity | default: 100 | divided_by: 100.0 }};
+    --buttons-radius: {{ settings.buttons_radius | default: 0 }}px;
+    --buttons-shadow-opacity: {{ settings.buttons_shadow_opacity | default: 0 | divided_by: 100.0 }};
+    --buttons-shadow-horizontal-offset: {{ settings.buttons_shadow_horizontal_offset | default: 0 }}px;
+    --buttons-shadow-vertical-offset: {{ settings.buttons_shadow_vertical_offset | default: 0 }}px;
+    --buttons-shadow-blur: {{ settings.buttons_shadow_blur | default: 0 }}px;
+    --buttons-shadow: 
+      {% if settings.buttons_shadow_opacity > 0 %}
+        {{ settings.buttons_shadow_horizontal_offset | default: 0 }}px 
+        {{ settings.buttons_shadow_vertical_offset | default: 0 }}px 
+        {{ settings.buttons_shadow_blur | default: 0 }}px 
+        rgba({{ settings.colors.shadow | default: '#242424' | color_extract: 'red' }}, {{ settings.colors.shadow | default: '#242424' | color_extract: 'green' }}, {{ settings.colors.shadow | default: '#242424' | color_extract: 'blue' }}, {{ settings.buttons_shadow_opacity | default: 0 | divided_by: 100.0 }})
+      {% else %}
+        none
+      {% endif %};
+    
+    /* Input styling from settings */
+    --inputs-border-thickness: {{ settings.inputs_border_thickness | default: 1 }}px;
+    --inputs-border-opacity: {{ settings.inputs_border_opacity | default: 55 | divided_by: 100.0 }};
+    --inputs-radius: {{ settings.inputs_radius | default: 0 }}px;
+    --inputs-shadow-opacity: {{ settings.inputs_shadow_opacity | default: 0 | divided_by: 100.0 }};
+    --inputs-shadow-horizontal-offset: {{ settings.inputs_shadow_horizontal_offset | default: 0 }}px;
+    --inputs-shadow-vertical-offset: {{ settings.inputs_shadow_vertical_offset | default: 0 }}px;
+    --inputs-shadow-blur: {{ settings.inputs_shadow_blur | default: 0 }}px;
+    --inputs-shadow: 
+      {% if settings.inputs_shadow_opacity > 0 %}
+        {{ settings.inputs_shadow_horizontal_offset | default: 0 }}px 
+        {{ settings.inputs_shadow_vertical_offset | default: 0 }}px 
+        {{ settings.inputs_shadow_blur | default: 0 }}px 
+        rgba({{ settings.colors.shadow | default: '#242424' | color_extract: 'red' }}, {{ settings.colors.shadow | default: '#242424' | color_extract: 'green' }}, {{ settings.colors.shadow | default: '#242424' | color_extract: 'blue' }}, {{ settings.inputs_shadow_opacity | default: 0 | divided_by: 100.0 }})
+      {% else %}
+        none
+      {% endif %};
+    
+    /* Card styling from settings */
+    --card-image-padding: {{ settings.card_image_padding | default: 0 }}px;
+    --card-text-alignment: {{ settings.card_text_alignment | default: 'left' }};
+    --card-border-thickness: {{ settings.card_border_thickness | default: 0 }}px;
+    --card-border-opacity: {{ settings.card_border_opacity | default: 0 | divided_by: 100.0 }};
+    --card-corner-radius: {{ settings.card_corner_radius | default: 0 }}px;
+    --card-shadow-opacity: {{ settings.card_shadow_opacity | default: 10 | divided_by: 100.0 }};
+    --card-shadow-horizontal-offset: {{ settings.card_shadow_horizontal_offset | default: 0 }}px;
+    --card-shadow-vertical-offset: {{ settings.card_shadow_vertical_offset | default: 0 }}px;
+    --card-shadow-blur: {{ settings.card_shadow_blur | default: 0 }}px;
+    --card-shadow: 
+      {% if settings.card_shadow_opacity > 0 %}
+        {{ settings.card_shadow_horizontal_offset | default: 0 }}px 
+        {{ settings.card_shadow_vertical_offset | default: 0 }}px 
+        {{ settings.card_shadow_blur | default: 0 }}px 
+        rgba({{ settings.colors.shadow | default: '#242424' | color_extract: 'red' }}, {{ settings.colors.shadow | default: '#242424' | color_extract: 'green' }}, {{ settings.colors.shadow | default: '#242424' | color_extract: 'blue' }}, {{ settings.card_shadow_opacity | default: 10 | divided_by: 100.0 }})
+      {% else %}
+        none
+      {% endif %};
+    
+    /* Collection Card styling from settings */
+    --collection-card-image-padding: {{ settings.collection_card_image_padding | default: 0 }}px;
+    --collection-card-text-alignment: {{ settings.collection_card_text_alignment | default: 'left' }};
+    --collection-card-border-thickness: {{ settings.collection_card_border_thickness | default: 0 }}px;
+    --collection-card-border-opacity: {{ settings.collection_card_border_opacity | default: 0 | divided_by: 100.0 }};
+    --collection-card-corner-radius: {{ settings.collection_card_corner_radius | default: 0 }}px;
+    --collection-card-shadow-opacity: {{ settings.collection_card_shadow_opacity | default: 10 | divided_by: 100.0 }};
+    --collection-card-shadow-horizontal-offset: {{ settings.collection_card_shadow_horizontal_offset | default: 0 }}px;
+    --collection-card-shadow-vertical-offset: {{ settings.collection_card_shadow_vertical_offset | default: 0 }}px;
+    --collection-card-shadow-blur: {{ settings.collection_card_shadow_blur | default: 0 }}px;
+    --collection-card-shadow: 
+      {% if settings.collection_card_shadow_opacity > 0 %}
+        {{ settings.collection_card_shadow_horizontal_offset | default: 0 }}px 
+        {{ settings.collection_card_shadow_vertical_offset | default: 0 }}px 
+        {{ settings.collection_card_shadow_blur | default: 0 }}px 
+        rgba({{ settings.colors.shadow | default: '#242424' | color_extract: 'red' }}, {{ settings.colors.shadow | default: '#242424' | color_extract: 'green' }}, {{ settings.colors.shadow | default: '#242424' | color_extract: 'blue' }}, {{ settings.collection_card_shadow_opacity | default: 10 | divided_by: 100.0 }})
+      {% else %}
+        none
+      {% endif %};
+    
+    /* Blog Card styling from settings */
+    --blog-card-image-padding: {{ settings.blog_card_image_padding | default: 0 }}px;
+    --blog-card-text-alignment: {{ settings.blog_card_text_alignment | default: 'left' }};
+    --blog-card-border-thickness: {{ settings.blog_card_border_thickness | default: 0 }}px;
+    --blog-card-border-opacity: {{ settings.blog_card_border_opacity | default: 0 | divided_by: 100.0 }};
+    --blog-card-corner-radius: {{ settings.blog_card_corner_radius | default: 0 }}px;
+    --blog-card-shadow-opacity: {{ settings.blog_card_shadow_opacity | default: 10 | divided_by: 100.0 }};
+    --blog-card-shadow-horizontal-offset: {{ settings.blog_card_shadow_horizontal_offset | default: 0 }}px;
+    --blog-card-shadow-vertical-offset: {{ settings.blog_card_shadow_vertical_offset | default: 0 }}px;
+    --blog-card-shadow-blur: {{ settings.blog_card_shadow_blur | default: 0 }}px;
+    --blog-card-shadow: 
+      {% if settings.blog_card_shadow_opacity > 0 %}
+        {{ settings.blog_card_shadow_horizontal_offset | default: 0 }}px 
+        {{ settings.blog_card_shadow_vertical_offset | default: 0 }}px 
+        {{ settings.blog_card_shadow_blur | default: 0 }}px 
+        rgba({{ settings.colors.shadow | default: '#242424' | color_extract: 'red' }}, {{ settings.colors.shadow | default: '#242424' | color_extract: 'green' }}, {{ settings.colors.shadow | default: '#242424' | color_extract: 'blue' }}, {{ settings.blog_card_shadow_opacity | default: 10 | divided_by: 100.0 }})
+      {% else %}
+        none
+      {% endif %};
   }
 {% endstyle %}

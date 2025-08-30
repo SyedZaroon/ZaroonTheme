@@ -2,10 +2,16 @@
   Welcome to Shopify theme development!
 {% endcomment %}
 
+<style>
+  .customh1{
+    font-size:var(--font-size-base);
+  }
+  </style>
+
 <div class="welcome full-width">
   <div class="welcome-content">
     <div>
-      <h1>Hello, World!</h1>
+      <h1 class="customh1">Hello, World!</h1>
 
       <p class="welcome-description">
         The Skeleton theme is a minimal, carefully structured Shopify theme designed to help you quickly get started.
@@ -134,6 +140,11 @@
 {
   "name": "Hello World",
   "settings": [],
+  "blocks": [
+    {
+      "type": "@theme"
+    }
+  ],
   "presets": [
     {
       "name": "Hello World Template",

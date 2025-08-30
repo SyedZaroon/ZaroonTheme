@@ -48,5 +48,221 @@
     "submit": "Search",
     "no_results_html": "No results found for {{ terms }}",
     "results_for_html": "{{ count }} results found for {{ terms }}"
+  },
+  "general": {
+    "text": "Text",
+    "logo": "Logo",
+    "favicon": "Favicon",
+    "colors": "Colors",
+    "typography": "Typography",
+    "fonts": "Fonts",
+    "primary": "Primary",
+    "secondary": "Secondary",
+    "layout": "Layout",
+    "button": "Button"
+  },
+  "labels": {
+    "text": "Text",
+    "text_style": "Text style",
+    "alignment": "Text alignment",
+    "page_width": "Page width",
+    "space_between_section": "Space between sections",
+    "thickness": "Border thickness",
+    "opacity": "Opacity",
+    "corner_radius": "Corner radius",
+    "horizontal_offset": "Horizontal offset",
+    "vertical_offset": "Vertical offset",
+    "blur": "Blur",
+    "image_padding": "Image padding",
+    "color_scheme": "Color scheme"
+  },
+  "options": {
+    "text_style": {
+      "title": "Title",
+      "subtitle": "Subtitle",
+      "normal": "Normal"
+    },
+    "alignment": {
+      "left": "Left",
+      "center": "Center",
+      "right": "Right"
+    }
+  },
+  "categories": {
+    "basic": "Basic"
+  },
+  "header": {
+    "border": "Border",
+    "shadow": "Shadow"
+  },
+  "blocks": {
+    "button": {
+      "name": "Button",
+      "headers": {
+        "content": "Button Content",
+        "style": "Button Style",
+        "colors": "Button Colors",
+        "hover_colors": "Hover Colors",
+        "advanced": "Advanced Settings"
+      },
+      "settings": {
+        "button_text": {
+          "label": "Button text"
+        },
+        "button_url": {
+          "label": "Button link"
+        },
+        "open_in_new_tab": {
+          "label": "Open link in new tab"
+        },
+        "button_style": {
+          "label": "Button style",
+          "options": {
+            "primary": "Primary",
+            "secondary": "Secondary",
+            "ghost": "Ghost"
+          }
+        },
+        "button_size": {
+          "label": "Button size",
+          "options": {
+            "small": "Small",
+            "medium": "Medium",
+            "large": "Large",
+            "extra_large": "Extra Large"
+          }
+        },
+        "full_width": {
+          "label": "Full width button"
+        },
+        "text_color": {
+          "label": "Text color",
+          "info": "Override theme default text color"
+        },
+        "background_color": {
+          "label": "Background color",
+          "info": "Override theme default background color"
+        },
+        "border_color": {
+          "label": "Border color",
+          "info": "Override theme default border color"
+        },
+        "hover_text_color": {
+          "label": "Hover text color",
+          "info": "Color when hovering over the button"
+        },
+        "hover_background_color": {
+          "label": "Hover background color",
+          "info": "Background color when hovering over the button"
+        },
+        "hover_border_color": {
+          "label": "Hover border color",
+          "info": "Border color when hovering over the button"
+        },
+        "button_id": {
+          "label": "Button ID",
+          "info": "Add a unique ID for custom styling or JavaScript targeting"
+        },
+        "custom_classes": {
+          "label": "Custom CSS classes",
+          "info": "Add custom CSS classes separated by spaces"
+        }
+      },
+      "presets": {
+        "primary": {
+          "name": "Primary Button"
+        },
+        "secondary": {
+          "name": "Secondary Button"
+        }
+      }
+    }
+  },
+  "settings_schema": {
+    "colors": {
+      "settings": {
+        "background": {
+          "label": "Background"
+        },
+        "background_gradient": {
+          "label": "Background gradient",
+          "info": "Gradient replaces background color when set"
+        },
+        "heading_color": {
+          "label": "Heading color"
+        },
+        "text": {
+          "label": "Text"
+        },
+        "button_background": {
+          "label": "Button background"
+        },
+        "button_label": {
+          "label": "Button text"
+        },
+        "secondary_button_label": {
+          "label": "Secondary button text"
+        },
+        "shadow": {
+          "label": "Shadow"
+        }
+      }
+    },
+    "buttons": {
+      "title": "Buttons"
+    },
+    "inputs": {
+      "title": "Form inputs"
+    },
+    "cards": {
+      "title": "Product cards"
+    },
+    "collection_cards": {
+      "title": "Collection cards"
+    },
+    "blogs_cards": {
+      "title": "Blog cards"
+    },
+    "social": {
+      "title": "Social media",
+      "settings": {
+        "facebook": {
+          "title": "Facebook",
+          "info": "https://facebook.com/shopify"
+        },
+        "instagram": {
+          "title": "Instagram",
+          "info": "https://instagram.com/shopify"
+        },
+        "youtube": {
+          "title": "YouTube",
+          "info": "https://youtube.com/shopify"
+        },
+        "tiktok": {
+          "title": "TikTok",
+          "info": "https://tiktok.com/@shopify"
+        },
+        "twitter": {
+          "title": "Twitter",
+          "info": "https://twitter.com/shopify"
+        },
+        "snapchat": {
+          "title": "Snapchat",
+          "info": "https://snapchat.com/add/shopify"
+        },
+        "pinterest": {
+          "title": "Pinterest",
+          "info": "https://pinterest.com/shopify"
+        },
+        "tumblr": {
+          "title": "Tumblr",
+          "info": "https://shopify.tumblr.com"
+        },
+        "vimeo": {
+          "title": "Vimeo",
+          "info": "https://vimeo.com/shopify"
+        }
+      }
+    }
   }
 }

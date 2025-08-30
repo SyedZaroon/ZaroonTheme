@@ -59,7 +59,9 @@
     "horizontal_offset": "Horizontal offset",
     "vertical_offset": "Vertical offset",
     "blur": "Blur",
-    "color_scheme": "Color scheme"
+    "color_scheme": "Color scheme",
+    "sub_text": "Sub Text",
+    "border_width": "Border Width",
   },
   "options": {
     "alignment": {
@@ -175,7 +177,19 @@
   "header":{
     "border": "Border",
     "shadow": "Shadow",
-    "inputs":"Inputs"
+    "inputs":"Inputs",
+    "button_type": "Button Type",
+    "primary_btn" : "Primary Button",
+    "secondary_btn": "Secondary Button",
+    "color": "Color",
+    "button_setting": "Button Settings"
 },
+"blocks":{
+  "text": "Text",
+  "buttons": "Buttons"
+},
+"categories":{
+  "basic": "Basic",
+}
 }
 

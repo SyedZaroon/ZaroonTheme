@@ -1,0 +1,25 @@
+{% schema %}
+{
+  "name": "Custom Liquid",
+  "tag": "section",
+  "class": "custom-liquid-section",
+  "settings": [
+    {
+      "type": "liquid",
+      "id": "custom_liquid",
+      "label": "Custom code",
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Liquid",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+
+<div class="custom-liquid-wrapper">
+  {{ section.settings.custom_liquid }}
+</div>
