@@ -1,0 +1,110 @@
+{% assign block_settings = block.settings %}
+
+<div class="footer-newsletter" {{ block.shopify_attributes }}>
+
+  {% form 'customer', class: 'footer-newsletter__form' %}
+    {% if form.errors %}
+      <div class="footer-newsletter__errors">
+        {% for error in form.errors %}
+          <p class="error">{{ error }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if form.posted_successfully? %}
+      <div class="footer-newsletter__success">
+        <p>{{ block_settings.success_message | default: 'Thank you for subscribing!' }}</p>
+      </div>
+    {% endif %}
+
+    <div class="footer-newsletter__input-group">
+      <input 
+        type="email" 
+        name="contact[email]" 
+        id="newsletter-email-{{ block.id }}"
+        class="footer-newsletter__input"
+        placeholder="{{ block_settings.placeholder | default: 'Enter your email' }}"
+        aria-label="Email address"
+        required
+      >
+      <button 
+        type="submit" 
+        class="footer-newsletter__button"
+        aria-label="Subscribe to newsletter"
+      >
+        {{ block_settings.button_text | default: 'Subscribe' }}
+      </button>
+    </div>
+
+    <input type="hidden" name="contact[tags]" value="newsletter">
+  {% endform %}
+
+  {% if block_settings.privacy_text != blank %}
+    <div class="footer-newsletter__privacy rte">
+      {{ block_settings.privacy_text }}
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Footer Newsletter",
+  "class": "footer-block",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Stay Updated"
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Email Placeholder",
+      "default": "Enter your email"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Subscribe"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success Message",
+      "default": "Thank you for subscribing!"
+    },
+    {
+      "type": "richtext",
+      "id": "privacy_text",
+      "label": "Privacy Text",
+      "info": "Small print text about privacy policy, etc."
+    },
+    {
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "default": "primary"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer Newsletter",
+      "category": "Footer",
+      "settings": {
+        "heading": "Stay Updated"
+      }
+    }
+  ]
+}
+{% endschema %}

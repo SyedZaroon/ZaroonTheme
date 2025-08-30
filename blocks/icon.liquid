@@ -1,0 +1,153 @@
+{% assign block_settings = block.settings %}
+{% assign icon_block_class = 'icon-block__media icon-block-' | append: block.id %}
+
+{% capture icon %}
+  {% render 'icon-or-image',
+    icon: block_settings.icon,
+    image_upload: block_settings.image_upload,
+    width: block_settings.width,
+    class_name: icon_block_class,
+    attributes: block.shopify_attributes
+  %}
+{% endcapture %}
+
+<div class="icon-block icon-block-{{ block.id }}" {{ block.shopify_attributes }}>
+  {%- if block_settings.link != blank -%}
+    <a
+      href="{{ block_settings.link }}"
+      class="icon-block__link"
+      {% if block_settings.open_in_new_tab %}
+        target="_blank" rel="noopener"
+      {% endif %}
+      aria-label="{% if block_settings.icon != 'none' %}{{ block_settings.icon | capitalize }} icon{% else %}Custom icon{% endif %}{% if block_settings.link %} - opens in {% if block_settings.open_in_new_tab %}new window{% else %}same window{% endif %}{% endif %}"
+    >
+      {{ icon }}
+    </a>
+  {%- else -%}
+    {{ icon }}
+  {%- endif -%}
+</div>
+<style>
+    .icon-block-{{ block.id }} {
+  color: {{ block_settings.icon_color }};
+}
+
+.icon-block-{{ block.id }} svg {
+  fill: currentColor;
+}
+
+  .icon-block-{{ block.id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: {{ block_settings.icon_color }};
+  }
+
+  .icon-block-{{ block.id }} .icon-block__media {
+    height: auto;
+    width: {{ block_settings.width }}px;
+    transition: transform 0.2s ease;
+  }
+
+  .icon-block-{{ block.id }}:hover .icon-block__media {
+    transform: scale(1.1);
+  }
+
+  .icon-block-{{ block.id }} svg {
+    fill: currentColor;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Icon",
+  "class": "icon-block",
+  "settings": [
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "Icon",
+      "options": [
+        { "value": "none", "label": "none" },
+        { "value": "arrow-left", "label": "arrow-left" },
+        { "value": "arrow-right", "label": "arrow-right" },
+        { "value": "arrow-up", "label": "arrow-up" },
+        { "value": "arrow-down", "label": "arrow-down" },
+        { "value": "chevron-left", "label": "chevron-left" },
+        { "value": "chevron-right", "label": "chevron-right" },
+        { "value": "chevron-up", "label": "chevron-up" },
+        { "value": "chevron-down", "label": "chevron-down" },
+        { "value": "chevrons-left", "label": "chevrons-left" },
+        { "value": "chevrons-right", "label": "chevrons-right" },
+        { "value": "check", "label": "check" },
+        { "value": "cross", "label": "cross" },
+        { "value": "plus", "label": "plus" },
+        { "value": "minus", "label": "minus" },
+        { "value": "search", "label": "search" },
+        { "value": "refresh", "label": "refresh" },
+        { "value": "upload", "label": "upload" },
+        { "value": "download", "label": "download" },
+        { "value": "external-link", "label": "external-link" },
+        { "value": "link", "label": "link" },
+        { "value": "home", "label": "home" },
+        { "value": "user", "label": "user" },
+        { "value": "heart", "label": "heart" },
+        { "value": "star", "label": "star" },
+        { "value": "play", "label": "play" },
+        { "value": "pause", "label": "pause" },
+        { "value": "twitter", "label": "twitter" },
+        { "value": "instagram", "label": "instagram" },
+        { "value": "linkedin", "label": "linkedin" },
+        { "value": "youtube", "label": "youtube" },
+        { "value": "github", "label": "github" },
+        { "value": "whatsapp", "label": "whatsapp" },
+        { "value": "telegram", "label": "telegram" },
+        { "value": "tiktok", "label": "tiktok" }
+      ],
+      "default": "tiktok"
+    },
+    {
+        "type": "color",
+        "id": "icon_color",
+        "label": "Icon Color",
+        "default": "#000000",
+    },
+    {
+      "type": "image_picker",
+      "id": "image_upload",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "width",
+      "label": "Image Width",
+      "min": 12,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "link"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_in_new_tab",
+      "label": "Open in New Tab",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Icon",
+      "category": "Basic",
+      "settings": {
+        "icon": "tiktok"
+      }
+    }
+  ]
+}
+{% endschema %}

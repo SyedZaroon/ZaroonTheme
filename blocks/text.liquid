@@ -7,7 +7,7 @@
 
 <div
   class="text {{ block.settings.text_style }}"
-  style="--text-align: {{ block.settings.alignment }}"
+  style="--text-align: {{ block.settings.alignment }}; --text-color: {{ block.settings.text_color }}"
   {{ block.shopify_attributes }}
 >
   {{ block.settings.text }}
@@ -16,6 +16,7 @@
 {% stylesheet %}
   .text {
     text-align: var(--text-align);
+    color: var(--text-color);
   }
   .text--title {
     font-size: 2rem;
@@ -58,17 +59,7 @@
       "id": "text_color",
       "label": "Color Picker",
       "default": "#000"
-    },
-    {
-      "type": "range",
-      "id": "text_size",
-      "min": 12,
-      "max": 24,
-      "step": 2,
-      "unit": "px",
-      "default": 12,
-      "label": "Text Size",
-    },
+    }
   ],
   "presets": [
     { "name": "t:general.text" ,

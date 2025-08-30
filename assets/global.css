@@ -1,0 +1,340 @@
+/* ==========================================================================
+   Footer Block Styles
+   ========================================================================== */
+
+/* Footer Text Block */
+.footer-text {
+  margin-bottom: 1rem;
+}
+
+.footer-text__heading {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--color-foreground, #333);
+  line-height: 1.4;
+}
+
+.footer-text__content {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  color: var(--color-foreground-subtle, #666);
+}
+
+.footer-text__content p {
+  margin-bottom: 0.75rem;
+}
+
+.footer-text__content p:last-child {
+  margin-bottom: 0;
+}
+
+.footer-text__link {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 500;
+  color: var(--color-accent, #007acc);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-text__link:hover {
+  color: var(--color-accent-hover, #005fa3);
+}
+
+/* Text alignment classes */
+.footer-text[data-alignment="center"] {
+  text-align: center;
+}
+
+.footer-text[data-alignment="right"] {
+  text-align: right;
+}
+
+/* Footer Menu Block */
+.footer-menu {
+  margin-bottom: 1rem;
+}
+
+.footer-menu__heading {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--color-foreground, #333);
+  line-height: 1.4;
+}
+
+.footer-menu__nav {
+  margin-bottom: 0.5rem;
+}
+
+.footer-menu__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-menu__list--horizontal {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-menu__item {
+  margin: 0;
+}
+
+.footer-menu__link {
+  color: var(--color-foreground-subtle, #666);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  display: block;
+  padding: 0.25rem 0;
+}
+
+.footer-menu__link:hover {
+  color: var(--color-accent, #007acc);
+}
+
+/* Footer Social Block */
+.footer-social {
+  margin-bottom: 1rem;
+}
+
+.footer-social__heading {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--color-foreground, #333);
+  line-height: 1.4;
+}
+
+.footer-social__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.footer-social__item {
+  margin: 0;
+}
+
+.footer-social__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.footer-social__link:hover {
+  background-color: var(--color-background-hover, #f0f0f0);
+  transform: translateY(-2px);
+}
+
+.footer-social__icon {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+/* Footer Newsletter Block */
+.footer-newsletter {
+  margin-bottom: 1rem;
+}
+
+.footer-newsletter__heading {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--color-foreground, #333);
+  line-height: 1.4;
+}
+
+.footer-newsletter__description {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  color: var(--color-foreground-subtle, #666);
+}
+
+.footer-newsletter__description p {
+  margin-bottom: 0.75rem;
+}
+
+.footer-newsletter__description p:last-child {
+  margin-bottom: 0;
+}
+
+.footer-newsletter__form {
+  margin-bottom: 1rem;
+}
+
+.footer-newsletter__errors {
+  margin-bottom: 1rem;
+  color: var(--color-error, #d32f2f);
+  font-size: 0.875rem;
+}
+
+.footer-newsletter__success {
+  margin-bottom: 1rem;
+  color: var(--color-success, #2e7d32);
+  font-size: 0.875rem;
+}
+
+.footer-newsletter__input-group {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 480px) {
+  .footer-newsletter__input-group {
+    flex-direction: column;
+  }
+}
+
+.footer-newsletter__input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid var(--color-border, #ddd);
+  border-radius: 4px;
+  font-size: 1rem;
+  background: var(--color-background, #fff);
+  color: var(--color-foreground, #333);
+  transition: border-color 0.2s ease;
+}
+
+.footer-newsletter__input:focus {
+  outline: none;
+  border-color: var(--color-accent, #007acc);
+}
+
+.footer-newsletter__button {
+  padding: 0.75rem 1.5rem;
+  background: var(--color-accent, #007acc);
+  color: var(--color-accent-contrast, #fff);
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.footer-newsletter__button:hover {
+  background: var(--color-accent-hover, #005fa3);
+}
+
+.footer-newsletter__privacy {
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--color-foreground-subtle, #666);
+}
+
+.footer-newsletter__privacy p {
+  margin: 0;
+}
+
+/* Icon Block Enhancements */
+.icon-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-block__media {
+  transition: transform 0.2s ease;
+}
+
+.icon-block:hover .icon-block__media {
+  transform: scale(1.1);
+}
+
+/* Responsive Design Token Utilities */
+@media (max-width: 1024px) {
+  .footer-text__heading,
+  .footer-menu__heading,
+  .footer-social__heading,
+  .footer-newsletter__heading {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-text__heading,
+  .footer-menu__heading,
+  .footer-social__heading,
+  .footer-newsletter__heading {
+    margin-bottom: 0.75rem;
+  }
+  
+  .footer-social__list {
+    justify-content: center;
+  }
+}
+
+/* Common Footer Block Spacing */
+.footer-block + .footer-block {
+  margin-top: 2rem;
+}
+
+@media (min-width: 769px) {
+  .footer-block + .footer-block {
+    margin-top: 0;
+  }
+}
+
+/* RTE (Rich Text Editor) Content Styling */
+.rte {
+  line-height: 1.6;
+}
+
+.rte h1, .rte h2, .rte h3, .rte h4, .rte h5, .rte h6 {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+.rte h1:first-child,
+.rte h2:first-child,
+.rte h3:first-child,
+.rte h4:first-child,
+.rte h5:first-child,
+.rte h6:first-child {
+  margin-top: 0;
+}
+
+.rte p {
+  margin-bottom: 1em;
+}
+
+.rte p:last-child {
+  margin-bottom: 0;
+}
+
+.rte ul, .rte ol {
+  margin-left: 1.5em;
+  margin-bottom: 1em;
+}
+
+.rte li {
+  margin-bottom: 0.25em;
+}
+
+.rte a {
+  color: var(--color-accent, #007acc);
+  text-decoration: underline;
+}
+
+.rte a:hover {
+  color: var(--color-accent-hover, #005fa3);
+}

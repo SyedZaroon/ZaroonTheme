@@ -1,0 +1,71 @@
+{% assign block_settings = block.settings %}
+
+<div class="footer-menu menu-layout-{{ block_settings.layout }}" {{ block.shopify_attributes }}>
+  {% if block_settings.menu != blank %}
+    <nav class="footer-menu__nav">
+      <ul class="footer-menu__list">
+        {% for link in block_settings.menu.links %}
+          <li class="footer-menu__item">
+            <a href="{{ link.url }}" class="footer-menu__link">
+              {{ link.title }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+  {% endif %}
+</div>
+
+<style>
+  {%- if block_settings.layout == "horizontal" -%}
+    .footer-menu.menu-layout-horizontal ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 20px; /* spacing between items */
+    }
+    .footer-menu.menu-layout-horizontal ul li {
+      margin: 0;
+    }
+  {%- else -%}
+    .footer-menu.menu-layout-vertical ul,
+    .footer-menu.menu-layout-vertical li {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+  {%- endif -%}
+</style>
+
+
+{% schema %}
+{
+  "name": "Menu",
+  "class": "footer-block",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "info": "Select a menu from your navigation settings"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Menu Layout",
+      "options": [
+        { "value": "vertical", "label": "Vertical" },
+        { "value": "horizontal", "label": "Horizontal" }
+      ],
+      "default": "vertical"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Menu",
+      "category": "Links",
+    }
+  ]
+}
+{% endschema %}

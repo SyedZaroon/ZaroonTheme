@@ -1,56 +1,186 @@
-<footer>
-  <div class="footer__copyright">
-    &copy;
-    {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
-  </div>
-
-  <div class="footer__links">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
-
-  <div class="footer__payment">
-    {% if section.settings.show_payment_icons %}
-      {% for type in shop.enabled_payment_types %}
-        {{ type | payment_type_svg_tag }}
+<div class="full-width" >
+<footer class="footer" id="footer">
+  <div class="footer__container">
+    <!-- Main footer content -->
+    <div class="footer__blocks">
+      {% for block in section.blocks %}
+        <div class="footer__block footer__block--{{ block.type | replace: '-', '_' }}" {{ block.shopify_attributes }}>
+          {% render block %}
+        </div>
       {% endfor %}
-    {% endif %}
+    </div>
+
+    <!-- Footer bottom section -->
+    <div class="footer__bottom">
+      {% if section.settings.show_copyright %}
+        <div class="footer__copyright">
+          &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}{% if section.settings.copyright_text != blank %}, {{ section.settings.copyright_text }}{% endif %}
+        </div>
+      {% endif %}
+
+      {% if section.settings.show_payment_icons %}
+        <div class="footer__payment">
+          {% for type in shop.enabled_payment_types %}
+            {{ type | payment_type_svg_tag: class: 'footer__payment-icon' }}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if section.settings.show_powered_by %}
+        <div class="footer__powered">
+          {{ powered_by_link }}
+        </div>
+      {% endif %}
+    </div>
   </div>
 </footer>
+</div>
 
-{% stylesheet %}
-  footer {
+<style>
+  .footer {
+    background: var(--color-background-alt, #f8f8f8);
+    padding: 3rem 0 1rem;
+    margin-top: 4rem;
+    border-top: 1px solid var(--color-border, #e0e0e0);
+  }
+  
+  .footer__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .footer__blocks {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns_desktop | default: 4 }}, 1fr);
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  @media (max-width: 768px) {
+    .footer__blocks {
+      grid-template-columns: repeat({{ section.settings.columns_mobile | default: 1 }}, 1fr);
+      gap: 1.5rem;
+    }
+    
+    .footer {
+      padding: 2rem 0 1rem;
+      margin-top: 2rem;
+    }
+  }
+  
+  .footer__block {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .footer__bottom {
     display: flex;
     justify-content: space-between;
-    margin-top: 2rem;
-  }
-  footer a {
-    text-decoration: none;
-    color: var(--color-foreground);
-  }
-  footer .footer__links,
-  footer .footer__payment {
-    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
     gap: 1rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border, #e0e0e0);
+    font-size: 0.875rem;
+    color: var(--color-foreground-subtle, #666);
   }
-{% endstylesheet %}
+  
+  @media (max-width: 560px) {
+    .footer__bottom {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+  
+  .footer__payment {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  
+  .footer__payment-icon {
+    height: 20px;
+    width: auto;
+  }
+  
+  .footer a {
+    text-decoration: none;
+    color: var(--color-foreground, #333);
+    transition: color 0.2s ease;
+  }
+  
+  .footer a:hover {
+    color: var(--color-accent, #007acc);
+  }
+</style>
 
 {% schema %}
 {
-  "name": "t:general.footer",
+  "name": "Footer",
+  "class": "footer-section",
   "settings": [
     {
-      "type": "link_list",
-      "id": "menu",
-      "label": "t:labels.menu"
+      "type": "header",
+      "content": "Footer Bottom Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_copyright",
+      "label": "Show Copyright",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright Text",
+      "info": "Additional text to display with copyright"
     },
     {
       "type": "checkbox",
       "id": "show_payment_icons",
-      "label": "t:labels.show_payment_icons",
+      "label": "Show Payment Icons",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_powered_by",
+      "label": "Show 'Powered by Shopify'",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns on Desktop",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "label": "Columns on Mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@theme",
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer",
+      "category": "Footer",
+
     }
   ]
 }

@@ -13,9 +13,237 @@
   "sections": {
     "footer": {
       "type": "footer",
+      "blocks": {
+        "group_PGfBQr": {
+          "type": "group",
+          "name": "t:general.column",
+          "settings": {
+            "layout_direction": "group--vertical",
+            "alignment": "flex-start",
+            "padding": 0
+          },
+          "blocks": {
+            "text_mdzfCJ": {
+              "type": "text",
+              "name": "t:general.text",
+              "settings": {
+                "text": "Social",
+                "text_style": "text--title",
+                "alignment": "left",
+                "text_color": "#ff0606"
+              },
+              "blocks": {}
+            },
+            "textarea_tnfgLQ": {
+              "type": "textarea",
+              "name": "Text Block",
+              "settings": {
+                "text": "Write your content here...",
+                "alignment": "left",
+                "text_color": "#000000"
+              },
+              "blocks": {}
+            },
+            "group_KPPVfq": {
+              "type": "group",
+              "name": "t:general.column",
+              "settings": {
+                "layout_direction": "group--horizontal",
+                "alignment": "flex-start",
+                "padding": 0
+              },
+              "blocks": {
+                "icon_UcFiT9": {
+                  "type": "icon",
+                  "name": "Icon",
+                  "settings": {
+                    "icon": "whatsapp",
+                    "icon_color": "#3b1f1f",
+                    "image_upload": "shopify://shop_images/contact.png",
+                    "width": 28,
+                    "link": "",
+                    "open_in_new_tab": false
+                  },
+                  "blocks": {}
+                },
+                "text_bXWA9e": {
+                  "type": "text",
+                  "name": "t:general.text",
+                  "settings": {
+                    "text": "0305:6529811",
+                    "text_style": "text--normal",
+                    "alignment": "left",
+                    "text_color": "#000000"
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "icon_UcFiT9",
+                "text_bXWA9e"
+              ]
+            }
+          },
+          "block_order": [
+            "text_mdzfCJ",
+            "textarea_tnfgLQ",
+            "group_KPPVfq"
+          ]
+        },
+        "group_QyTqRb": {
+          "type": "group",
+          "name": "t:general.column",
+          "settings": {
+            "layout_direction": "group--vertical",
+            "alignment": "flex-start",
+            "padding": 0
+          },
+          "blocks": {
+            "text_Xdfkbb": {
+              "type": "text",
+              "name": "t:general.text",
+              "settings": {
+                "text": "Menu",
+                "text_style": "text--title",
+                "alignment": "left",
+                "text_color": "#000000"
+              },
+              "blocks": {}
+            },
+            "menu_MVgiYQ": {
+              "type": "menu",
+              "name": "Menu",
+              "settings": {
+                "menu": "main-menu",
+                "layout": "vertical"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_Xdfkbb",
+            "menu_MVgiYQ"
+          ]
+        },
+        "group_4rH9kq": {
+          "type": "group",
+          "name": "t:general.column",
+          "settings": {
+            "layout_direction": "group--vertical",
+            "alignment": "flex-start",
+            "padding": 0
+          },
+          "blocks": {
+            "text_APcBjX": {
+              "type": "text",
+              "name": "t:general.text",
+              "settings": {
+                "text": "Follow Us",
+                "text_style": "text--title",
+                "alignment": "left",
+                "text_color": "#000000"
+              },
+              "blocks": {}
+            },
+            "group_tcc3DT": {
+              "type": "group",
+              "name": "t:general.row",
+              "settings": {
+                "layout_direction": "group--horizontal",
+                "alignment": "flex-start",
+                "padding": 0
+              },
+              "blocks": {
+                "icon_greEL7": {
+                  "type": "icon",
+                  "name": "Icon",
+                  "settings": {
+                    "icon": "instagram",
+                    "icon_color": "#121212",
+                    "width": 24,
+                    "link": "",
+                    "open_in_new_tab": false
+                  },
+                  "blocks": {}
+                },
+                "icon_kmeXXD": {
+                  "type": "icon",
+                  "name": "Icon",
+                  "settings": {
+                    "icon": "whatsapp",
+                    "icon_color": "#000000",
+                    "width": 24,
+                    "link": "",
+                    "open_in_new_tab": false
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "icon_greEL7",
+                "icon_kmeXXD"
+              ]
+            }
+          },
+          "block_order": [
+            "text_APcBjX",
+            "group_tcc3DT"
+          ]
+        },
+        "group_jdDEGw": {
+          "type": "group",
+          "name": "t:general.column",
+          "settings": {
+            "layout_direction": "group--vertical",
+            "alignment": "flex-start",
+            "padding": 0
+          },
+          "blocks": {
+            "text_gdm3Ci": {
+              "type": "text",
+              "name": "Newsletter",
+              "settings": {
+                "text": "Newsletter",
+                "text_style": "text--title",
+                "alignment": "left",
+                "text_color": "#000000"
+              },
+              "blocks": {}
+            },
+            "footer_newsletter_Q7pQb6": {
+              "type": "footer-newsletter",
+              "name": "Footer Newsletter",
+              "settings": {
+                "heading": "Stay Updated",
+                "description": "<p>Subscribe to our newsletter for the latest updates and offers.</p>",
+                "placeholder": "Enter your email",
+                "button_text": "Subscribe",
+                "success_message": "Thank you for subscribing!",
+                "privacy_text": "",
+                "button_style": "primary"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_gdm3Ci",
+            "footer_newsletter_Q7pQb6"
+          ]
+        }
+      },
+      "block_order": [
+        "group_PGfBQr",
+        "group_QyTqRb",
+        "group_4rH9kq",
+        "group_jdDEGw"
+      ],
       "settings": {
-        "menu": "",
-        "show_payment_icons": true
+        "show_copyright": true,
+        "copyright_text": "",
+        "show_payment_icons": true,
+        "show_powered_by": false,
+        "columns_desktop": 4,
+        "columns_mobile": 1
       }
     }
   },

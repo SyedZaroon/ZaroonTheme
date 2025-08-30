@@ -1,0 +1,46 @@
+{% comment %}
+  Renders a text block.
+
+  @example
+  {% render 'text-block', block: block %}
+{% endcomment %}
+
+<div
+  class="text {{ block.settings.text_style }}"
+  style="text-align: {{ block.settings.alignment }}; color: {{ block.settings.text_color }};"
+  {{ block.shopify_attributes }}
+>
+  {{ block.settings.text }}
+</div>
+
+{% schema %}
+{
+  "name": "Text Block",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Write your content here..."
+    },
+    {
+      "type": "text_alignment",
+      "id": "alignment",
+      "label": "Alignment",
+      "default": "left"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text Block",
+      "category": "Basic"
+    }
+  ]
+}
+{% endschema %}
