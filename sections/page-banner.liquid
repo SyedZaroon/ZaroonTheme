@@ -1,0 +1,122 @@
+{%- assign color_scheme = section.settings.color_scheme.settings -%}
+
+<section class="product-banner full-width {{ section.settings.color_scheme }}">
+  <div class="product-banner__wrapper">
+    
+    {% if section.settings.background_image != blank %}
+      <div class="product-banner__bg">
+        {{ section.settings.background_image | image_url: width: 2000 | image_tag: class: 'product-banner__image' }}
+      </div>
+    {% endif %}
+
+    <div class="product-banner__content">
+
+      {% if section.settings.title != blank %}
+        <h2 class="product-banner__title">{{ section.settings.title }}</h2>
+      {% endif %}
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .product-banner {
+    position: relative;
+    overflow: hidden;
+  }
+
+  {% if section.settings.background_image == blank %}
+      .product-banner {
+    background-color: {{ section.settings.color_scheme.settings.background }}
+  }
+  {%- endif -%}
+
+{% if section.settings.background_image == blank and section.settings.color_scheme.settings.background_gradient != '' %}
+  .product-banner {
+    background: {{ section.settings.color_scheme.settings.background_gradient }};
+  }
+{% endif %}
+
+
+  .product-banner__wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 1.5rem;
+    min-height: 20vh;
+  }
+
+  .product-banner__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+  }
+
+  .product-banner__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-banner__content {
+    max-width: 800px;
+    color: var(--color-foreground, #fff);
+  }
+
+  .product-banner__title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: {{ color_scheme.heading_color }}
+  }
+
+
+  /* ✅ Responsive */
+  @media (max-width: 768px) {
+    .product-banner__wrapper {
+      padding: 3rem 1rem;
+      min-height: 50vh;
+    }
+
+    .product-banner__title {
+      font-size: 2rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Page Banner",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "background-1"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Our Latest Product"
+    },
+  ],
+  "presets": [
+    {
+      "name": "Page Banner",
+      "category": "Page"
+    }
+  ]
+}
+{% endschema %}

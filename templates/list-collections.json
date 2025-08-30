@@ -9,12 +9,25 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "collections",
-      "settings": {}
+    "page_banner_YFw8Uq": {
+      "type": "page-banner",
+      "name": "Page Banner",
+      "settings": {
+        "color_scheme": "",
+        "title": "Our Latest Product"
+      }
+    },
+    "custom_collection_W4V4qV": {
+      "type": "custom-collection",
+      "name": "Custom Collection",
+      "settings": {
+        "collection_type": "all",
+        "layout_style": "grid"
+      }
     }
   },
   "order": [
-    "main"
+    "page_banner_YFw8Uq",
+    "custom_collection_W4V4qV"
   ]
 }
