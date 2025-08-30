@@ -1,47 +1,139 @@
 {% comment %}
-  This section is used in the collection template to render collection page
-  listing all products within a collection.
-
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/collection
+  Section: Collections Display
+  Features:
+  - Choose All Collections OR Custom (multiple selectable via blocks)
+  - Layout option: Grid or Scrollable Flex
 {% endcomment %}
 
-<h1>{{ collection.title }}</h1>
+<section class="collections-section">
+  <div class="container space-section">
+    <h3>Collection </h3>
+    <div class="collections-wrapper {{ section.settings.layout_style }}">
+      {% if section.settings.collection_type == 'all' %}
+        {% for collection in collections %}
+          {% if collection != blank %}
+            <div class="collection-item">
+              <a href="{{ collection.url }}">
+                {% if collection.image %}
+                  <img src="{{ collection.image | image_url: width: 400 }}" alt="{{ collection.title }}">
+                {% else %}
+                  <div class="placeholder">No Image</div>
+                {% endif %}
+                <h3>{{ collection.title }}</h3>
+              </a>
+            </div>
+          {% endif %}
+        {% endfor %}
+      
+      {% elsif section.settings.collection_type == 'custom' %}
+        {% for block in section.blocks %}
+          {% if block.settings.collection != blank %}
+            {% assign collection = collections[block.settings.collection] %}
+            {% if collection %}
+              <div class="collection-item">
+                <a href="{{ collection.url }}">
+                  {% if collection.image %}
+                    <img src="{{ collection.image | image_url: width: 400 }}" alt="{{ collection.title }}">
+                  {% else %}
+                    <div class="placeholder">No Image</div>
+                  {% endif %}
+                  <h3>{{ collection.title }}</h3>
+                </a>
+              </div>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
 
-<div class="collection-products">
-  {% paginate collection.products by 20 %}
-    {% for product in collection.products %}
-      <div class="collection-product">
-        {% if product.featured_image %}
-          {% render 'image',
-            class: 'collection-product__image',
-            image: product.featured_image,
-            url: product.url,
-            width: 400,
-            height: 400,
-            crop: 'center'
-          %}
-        {% endif %}
-        <div class="collection-product__content">
-          <p>{{ product.title | escape | link_to: product.url }}</p>
-          <p>{{ product.price | money }}</p>
-        </div>
-      </div>
-    {% endfor %}
-
-    {{ paginate | default_pagination }}
-  {% endpaginate %}
-</div>
-
-{% stylesheet %}
-  .collection-products {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-  }
-{% endstylesheet %}
+  </div>
+</section>
 
 {% schema %}
 {
-  "name": "t:general.collection",
-  "settings": []
+  "name": "Collections Section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "collection_type",
+      "label": "Choose Collections",
+      "options": [
+        { "value": "all", "label": "All Collections" },
+        { "value": "custom", "label": "Custom Collections" }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "select",
+      "id": "layout_style",
+      "label": "Layout Style",
+      "options": [
+        { "value": "grid", "label": "Grid" },
+        { "value": "flex-scroll", "label": "Scrollable Flex" }
+      ],
+      "default": "grid"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_block",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collections Section",
+      "category": "Collections"
+    }
+  ]
 }
 {% endschema %}
+
+{% stylesheet %}
+.collections-wrapper.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.collections-wrapper.flex-scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 10px;
+}
+.collections-wrapper.flex-scroll .collection-item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  width: 200px;
+}
+
+.collection-item {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  text-align: center;
+  padding: 10px;
+  transition: transform 0.3s ease;
+}
+.collection-item:hover {
+  transform: translateY(-5px);
+}
+.collection-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+.collection-item h3 {
+  font-size: 16px;
+  margin-top: 10px;
+}
+{% endstylesheet %}

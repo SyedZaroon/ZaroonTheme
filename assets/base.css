@@ -92,9 +92,6 @@
   --space-80: 20rem;        /* 320px */
   --space-96: 24rem;        /* 384px */
 
-  /* Section spacing from theme settings */
-  --space-section: var(--space-between-sections, 0px);
-
   /* Border Radius Scale - Integrates with theme settings */
   --radius-none: 0;
   --radius-sm: 0.125rem;     /* 2px */
@@ -192,6 +189,12 @@
   --breakpoint-xl: 1280px;
   --breakpoint-2xl: 1536px;
 }
+
+    /* Section spacing from theme settings */
+    .space-section
+    {
+      margin: var(--space-between-sections, 0px) auto;
+    }
 
 /* ================================
    TYPOGRAPHY - HEADINGS
