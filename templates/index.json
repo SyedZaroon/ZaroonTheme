@@ -9,12 +9,46 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "hello-world",
-      "settings": {}
+    "product_banner_XmVTgf": {
+      "type": "product-banner",
+      "name": "Product Banner",
+      "settings": {
+        "color_scheme": "scheme-442bf905-cc69-4377-91c8-d8aca5564b1f",
+        "subtitle": "Introducing",
+        "title": "Our Latest Product",
+        "button_label": "Shop Now",
+        "button_link": "shopify://collections/frontpage"
+      }
+    },
+    "custom_collection_ExW7Cg": {
+      "type": "custom-collection",
+      "name": "Custom Collection",
+      "settings": {
+        "collection_type": "all",
+        "layout_style": "grid"
+      }
+    },
+    "faeture_products_UELyXt": {
+      "type": "faeture-products",
+      "name": "Featured Products",
+      "settings": {
+        "layout_style": "flex-scroll",
+        "featured_products": [
+          "airpods-pro-2nd-generation",
+          "alienware-m15-r7-15-6-inches-gaming-laptop-intel-core-i7-12700h-nvidia-geforce-1tb-ssd",
+          "alienware-m17-r5-17-3-inches-gaming-laptop-amd-ryzen-9-6900hx-nvidia-geforce-1tb-ssd",
+          "4-in-1-multi-charger-cable-65w-120cm",
+          "3-5mm-jack-handsfree",
+          "apple-airpods-max-wireless",
+          "amazon-fire-tv-stick-4k-max-fire-tv-stick-lite-fire-tv-stick-1",
+          "amazon-fire-tv-stick-3rd-gen"
+        ]
+      }
     }
   },
   "order": [
-    "main"
+    "product_banner_XmVTgf",
+    "custom_collection_ExW7Cg",
+    "faeture_products_UELyXt"
   ]
 }

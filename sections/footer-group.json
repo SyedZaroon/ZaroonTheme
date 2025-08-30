@@ -215,7 +215,6 @@
               "name": "Footer Newsletter",
               "settings": {
                 "heading": "Stay Updated",
-                "description": "<p>Subscribe to our newsletter for the latest updates and offers.</p>",
                 "placeholder": "Enter your email",
                 "button_text": "Subscribe",
                 "success_message": "Thank you for subscribing!",

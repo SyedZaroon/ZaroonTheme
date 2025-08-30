@@ -1,0 +1,148 @@
+{% comment %}
+  Section: Featured Products
+  Features:
+  - Merchant can select up to 8 products
+  - Display style: Grid or Scrollable Flex
+{% endcomment %}
+
+{% assign items = section.settings.featured_products %}
+
+<section class="featured-products">
+    
+  <div class="container space-section">
+    <h3>Feature Products</h3>
+    {% if items  %}
+      <div class="products-wrapper {{ section.settings.layout_style }}">
+        {% for product in items limit: 10 %}
+          <div class="product-item">
+            <a href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+              {% if product.featured_image %}
+                <img
+                  src="{{ product.featured_image | image_url: width: 400 }}"
+                  srcset="
+                    {{ product.featured_image | image_url: width: 200 }} 200w,
+                    {{ product.featured_image | image_url: width: 300 }} 300w,
+                    {{ product.featured_image | image_url: width: 400 }} 400w
+                  "
+                  sizes="(min-width: 768px) 200px, 40vw"
+                  loading="lazy"
+                  alt="{{ product.title | escape }}"
+                  width="auto"
+                  height="auto"
+                >
+              {% else %}
+                <div class="placeholder" role="img" aria-label="No image">No Image</div>
+              {% endif %}
+
+              <h3>{{ product.title }}</h3>
+
+              {% assign min_price = product.price_min %}
+              {% assign max_price = product.price_max %}
+              <p class="price">
+                {% if min_price != max_price %}
+                  From {{ min_price | money }}
+                {% else %}
+                  {{ product.price | money }}
+                {% endif %}
+                {% if product.compare_at_price_max > product.price_max %}
+                  <span class="compare">{{ product.compare_at_price_max | money }}</span>
+                {% endif %}
+              </p>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="products-empty">No products selected.</div>
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+.products-wrapper.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.products-wrapper.flex-scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 10px;
+}
+.products-wrapper.flex-scroll .product-item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  width: 220px;
+}
+
+.product-item {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  text-align: center;
+  padding: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.product-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 18px rgba(0,0,0,.06);
+}
+.product-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+}
+.product-item h3 {
+  font-size: 16px;
+  margin: 10px 0 5px;
+}
+.product-item .price {
+  font-weight: 700;
+  color: #333;
+}
+.product-item .price .compare {
+  color: #999;
+  text-decoration: line-through;
+  margin-left: 6px;
+  font-weight: 400;
+}
+.products-empty {
+  text-align: center;
+  color: #777;
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Featured Products",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout_style",
+      "label": "Layout Style",
+      "options": [
+        { "value": "grid", "label": "Grid" },
+        { "value": "flex-scroll", "label": "Scrollable Flex" }
+      ],
+      "default": "grid"
+    },
+    {
+      "type": "product_list",
+      "id": "featured_products",
+      "label": "Choose products",
+      "limit": 10
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Products",
+      "category": "Product"
+    }
+  ]
+}
+{% endschema %}

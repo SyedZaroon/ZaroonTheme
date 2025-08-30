@@ -15,7 +15,7 @@
             <div class="collection-item">
               <a href="{{ collection.url }}">
                 {% if collection.image %}
-                  <img src="{{ collection.image | image_url: width: 400 }}" alt="{{ collection.title }}">
+                  <img src="{{ collection.image | image_url: width: 400 }}" alt="{{ collection.title }}" width="auto" height="auto">
                 {% else %}
                   <div class="placeholder">No Image</div>
                 {% endif %}
@@ -33,7 +33,7 @@
               <div class="collection-item">
                 <a href="{{ collection.url }}">
                   {% if collection.image %}
-                    <img src="{{ collection.image | image_url: width: 400 }}" alt="{{ collection.title }}">
+                    <img src="{{ collection.image | image_url: width: 400 }}" alt="{{ collection.title }}" width="auto" height="auto">
                   {% else %}
                     <div class="placeholder">No Image</div>
                   {% endif %}
@@ -51,7 +51,7 @@
 
 {% schema %}
 {
-  "name": "Collections Section",
+  "name": "Custom Collection",
   "settings": [
     {
       "type": "select",
@@ -89,7 +89,7 @@
   ],
   "presets": [
     {
-      "name": "Collections Section",
+      "name": "Custom Collection",
       "category": "Collections"
     }
   ]

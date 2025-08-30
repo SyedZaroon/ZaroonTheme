@@ -11,21 +11,22 @@
   "current": {
     "logo": "shopify://shop_images/image_4.avif",
     "favicon": "shopify://shop_images/snowboard_wax.png",
+    "space_between_section": 100,
     "content_for_index": [],
     "color_schemes": {
       "scheme-1": {
         "settings": {
-          "background": "#ffffff",
-          "background_gradient": "#ab5b2a",
+          "background": "#000000",
+          "background_gradient": "linear-gradient(180deg, rgba(255, 126, 95, 1), rgba(254, 180, 123, 1) 100%)",
           "heading_color": "#fbfbfb",
           "text": "#1221a1",
-          "sub_text": "#a1a2a3"
+          "sub_text": "#ffffff"
         }
       },
       "scheme-2": {
         "settings": {
-          "background": "#242424",
-          "background_gradient": "",
+          "background": "rgba(0,0,0,0)",
+          "background_gradient": "linear-gradient(57deg, rgba(249, 119, 255, 1) 8%, rgba(54, 212, 255, 1) 47%, rgba(43, 252, 135, 1) 83%)",
           "heading_color": "#fb7480",
           "text": "#ffffff",
           "sub_text": "#121212"
@@ -38,6 +39,15 @@
           "heading_color": "#fb740f",
           "text": "#ffffff",
           "sub_text": "#121212"
+        }
+      },
+      "scheme-442bf905-cc69-4377-91c8-d8aca5564b1f": {
+        "settings": {
+          "background": "#000000",
+          "background_gradient": "",
+          "heading_color": "#fbfbfb",
+          "text": "#1221a1",
+          "sub_text": "#a1a2a3"
         }
       }
     }
