@@ -5,6 +5,8 @@
   - Display style: Grid or Scrollable Flex
 {% endcomment %}
 
+{{ 'product.css' | asset_url | stylesheet_tag }}
+
 {% assign items = section.settings.featured_products %}
 
 <section class="featured-products">
@@ -58,64 +60,6 @@
   </div>
 </section>
 
-{% stylesheet %}
-.products-wrapper.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-}
-
-.products-wrapper.flex-scroll {
-  display: flex;
-  gap: 16px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 10px;
-}
-.products-wrapper.flex-scroll .product-item {
-  flex: 0 0 auto;
-  scroll-snap-align: start;
-  width: 220px;
-}
-
-.product-item {
-  background: #fff;
-  border: 1px solid #eee;
-  border-radius: 10px;
-  text-align: center;
-  padding: 12px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.product-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 18px rgba(0,0,0,.06);
-}
-.product-item img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  display: block;
-}
-.product-item h3 {
-  font-size: 16px;
-  margin: 10px 0 5px;
-}
-.product-item .price {
-  font-weight: 700;
-  color: #333;
-}
-.product-item .price .compare {
-  color: #999;
-  text-decoration: line-through;
-  margin-left: 6px;
-  font-weight: 400;
-}
-.products-empty {
-  text-align: center;
-  color: #777;
-}
-{% endstylesheet %}
 
 {% schema %}
 {

@@ -11,11 +11,24 @@
   "sections": {
     "page-banner": {
       "type": "page-banner",
-      "settings": {}
+      "settings": {
+        "color_scheme": "",
+        "title": "Our Latest Product"
+      }
     },
     "collections": {
       "type": "main-collection",
-      "settings": {}
+      "settings": {
+        "filter": true,
+        "sidebar_width": 240,
+        "products_per_page": 12,
+        "columns_desktop": 4,
+        "columns_mobile": 2,
+        "grid_gap": 16,
+        "show_total_count": true,
+        "show_sort": true,
+        "show_grid_toggle": false
+      }
     }
   },
   "order": [

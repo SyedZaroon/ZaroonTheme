@@ -1,0 +1,240 @@
+
+/* === Layout / basic styles (minimal) === */
+.main-collection {
+    --sidebar-width: 280px;
+    --grid-gap: 16px;
+    --columns-desktop: 4;
+    --columns-mobile: 2;
+}
+
+.collection-page {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--grid-gap);
+}
+
+@media (min-width: 992px) {
+    .collection-page {
+        grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+    }
+}
+
+.collection-header .collection-title {
+    margin: 0 0 10px;
+}
+
+/* Sidebar filters */
+.filters-empty {
+    color: #777;
+}
+
+.filter-group {
+    margin: 0 0 1rem;
+}
+
+.filter-group__title {
+    margin: 0 0 .4rem;
+    font-weight: 600;
+}
+
+.filter-values {
+    list-style: none;
+    padding: 0;
+    margin: .25rem 0 0;
+    display: grid;
+    gap: .25rem;
+}
+
+.filter-value {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .25rem .35rem;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #333;
+}
+
+.filter-value:hover {
+    background: #f7f7f7;
+}
+
+.filter-value .box {
+    width: 14px;
+    height: 14px;
+    border: 1px solid #bbb;
+    border-radius: 3px;
+}
+
+.filter-value.is-active .box {
+    background: #111;
+    border-color: #111;
+}
+
+.filter-value .count {
+    color: #777;
+    font-size: .85em;
+}
+
+.filter-clear {
+    display: inline-block;
+    margin-top: .35rem;
+    font-size: .85rem;
+    color: #666;
+    text-decoration: underline;
+}
+
+/* Toolbar */
+.product-filter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: .75rem;
+}
+
+.collection-count {
+    margin: 0;
+    color: #555;
+}
+
+.collection-toolbar__sort {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.collection-toolbar__grid-toggle {
+    display: flex;
+    gap: .3rem;
+}
+
+.grid-toggle__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 30px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    color: #333;
+    text-decoration: none;
+    font-size: .9rem;
+}
+
+.grid-toggle__btn.is-active {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+}
+
+/* Active chips */
+.active-filters {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin: 0 0 1rem;
+}
+
+.active-filters .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .35rem .6rem;
+    border: 1px solid #ddd;
+    border-radius: 999px;
+    font-size: .875rem;
+    text-decoration: none;
+    color: #333;
+}
+
+.chip--active {
+    background: #f5f5f5;
+}
+
+.chip--clear {
+    border-color: #ccc;
+    color: #666;
+}
+
+/* Grid */
+.product-grid {
+    --desktop-grid: 4;
+    display: grid;
+    grid-template-columns: repeat(var(--columns-mobile), minmax(0, 1fr));
+    gap: var(--grid-gap);
+}
+
+@media (min-width:768px) {
+    .product-grid {
+        grid-template-columns: repeat(var(--desktop-grid), minmax(0, 1fr));
+    }
+}
+
+.product-item {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    text-align: center;
+    padding: 12px;
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.product-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, .06);
+}
+
+.product-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+}
+
+.product-item h3 {
+    font-size: 16px;
+    margin: 10px 0 5px;
+}
+
+.product-item .price {
+    font-weight: 700;
+    color: #333;
+}
+
+.product-item .price .compare {
+    color: #999;
+    text-decoration: line-through;
+    margin-left: 6px;
+    font-weight: 400;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    gap: .4rem;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.page-link {
+    padding: .4rem .6rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #333;
+}
+
+.page-link.active,
+.page-link:hover {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+}
