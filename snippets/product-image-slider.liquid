@@ -1,0 +1,94 @@
+{{ 'splide.min.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'splide.min.js' | asset_url }}" defer></script>
+
+<section id="main-carousel" class="splide" aria-label="Product Images">
+  <div class="splide__track">
+    <ul class="splide__list">
+      {% for image in product.images %}
+        <li class="splide__slide">
+          <img 
+            src="{{ image | image_url: width: 1000 }}" 
+            alt="{{ image.alt | escape }}" 
+            width="1000" 
+            height="1000"
+          >
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<ul id="thumbnails" class="thumbnails">
+  {% for image in product.images %}
+    <li class="thumbnail">
+      <img 
+        src="{{ image | image_url: width: 200 }}" 
+        alt="{{ image.alt | escape }}" 
+        width="70" 
+        height="70"
+      >
+    </li>
+  {% endfor %}
+</ul>
+
+<style>
+.thumbnails {
+  display: flex;
+  margin: 1rem auto 0;
+  padding: 0;
+  justify-content: center;
+}
+.thumbnail {
+  width: 70px;
+  height: 70px;
+  overflow: hidden;
+  list-style: none;
+  margin: 0 0.2rem;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+.thumbnail img {
+  width: 100%;
+  height: auto;
+}
+.thumbnail.is-active {
+  opacity: 1;
+  border: 2px solid #000;
+  border-radius: 4px;
+}
+</style>
+
+<script defer>
+document.addEventListener('DOMContentLoaded', function () {
+  var splide = new Splide('#main-carousel', {
+    pagination: false,
+    type: 'loop',
+  });
+
+  var thumbnails = document.getElementsByClassName('thumbnail');
+  var current;
+
+  for (var i = 0; i < thumbnails.length; i++) {
+    initThumbnail(thumbnails[i], i);
+  }
+
+  function initThumbnail(thumbnail, index) {
+    thumbnail.addEventListener('click', function () {
+      splide.go(index);
+    });
+  }
+
+  splide.on('mounted move', function () {
+    var thumbnail = thumbnails[splide.index];
+
+    if (thumbnail) {
+      if (current) current.classList.remove('is-active');
+      thumbnail.classList.add('is-active');
+      current = thumbnail;
+    }
+  });
+
+  splide.mount();
+});
+</script>

@@ -1,56 +1,109 @@
 {% comment %}
-  This section is used in the product template to render product page with
-  media, content, and add-to-cart form.
-
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/product
+  Custom product section with schema-enabled title, price, compare-at-price,
+  and form controls. Can be reused in product template.
 {% endcomment %}
 
 {{ 'main-product.css' | asset_url | stylesheet_tag }}
 
 <div class="main-product">
+  <!-- LEFT SIDE IMAGES -->
   <div class="product-images">
-    {% for image in product.images %}
-      {% render 'image', class: 'product-image', image: image %}
-    {% endfor %}
+    {% render 'product-image-slider', product: product %}
   </div>
 
+  <!-- RIGHT SIDE CONTENT -->
   <div class="product-content">
     <div class="product-info">
-      <h1>{{ product.title }}</h1>
-      <p>{{ product.price | money }}</p>
-    </div>
+      {% assign current_variant = product.selected_or_first_available_variant %}
+      {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
-    <div class="product-form">
-      {% form 'product', product %}
-        {% assign current_variant = product.selected_or_first_available_variant %}
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'title' %}
+            <h1 class="product-title">{{ product.title }}</h1>
 
-        <select name="id">
-          {% for variant in product.variants %}
-            <option
-              value="{{ variant.id }}"
-              {% if variant == current_variant %}
-                selected="selected"
+          {% when 'price' %}
+            <div class="product-prices">
+              <p class="product-price">{{ current_variant.price | money }}</p>
+
+              {% if section.settings.show_compare_price and current_variant.compare_at_price > current_variant.price %}
+                <p class="product-compare">
+                  <s>{{ current_variant.compare_at_price | money }}</s>
+                </p>
               {% endif %}
-            >
-              {{ variant.title }} - {{ variant.price | money }}
-            </option>
-          {% endfor %}
-        </select>
+            </div>
 
-        <input type="text" name="quantity" min="1" value="1">
+          {% when 'inventory' %}
+            {% if current_variant.available %}
+              {% if current_variant.inventory_management %}
+                {% if current_variant.inventory_quantity > 10 %}
+                  <p class="product-inventory in-stock">✅ In stock</p>
+                {% elsif current_variant.inventory_quantity > 0 %}
+                  <p class="product-inventory low-stock">
+                    ⚠️ Only {{ current_variant.inventory_quantity }} left in stock!
+                  </p>
+                {% endif %}
+              {% else %}
+                <p class="product-inventory in-stock">✅ In stock</p>
+              {% endif %}
+            {% else %}
+              <p class="product-inventory out-of-stock">❌ Out of stock</p>
+            {% endif %}
 
-        <input type="submit" value="Add to cart">
-        {{ form | payment_button }}
-      {% endform %}
+          {% when 'variant-picker' %}
+            {% form 'product', product, class: 'product-form' %}
+              {% render 'variant-picker', product: product %}
+
+              <input type="number" name="quantity" min="1" value="1">
+              <button type="submit" class="product-form__submit">Add to Cart</button>
+            {% endform %}
+
+            <!-- Store product JSON for JS -->
+            <script type="application/json" data-product-json>
+              {{ product | json }}
+            </script>
+        {% endcase %}
+      {% endfor %}
     </div>
   </div>
-
 </div>
 
 {% schema %}
 {
   "name": "t:general.product",
-  "settings": [],
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_images",
+      "label": "Show product images",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "title",
+      "name": "Title",
+      "settings": []
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "settings": []
+    },
+    {
+      "type": "inventory",
+      "name": "Inventory",
+      "settings": []
+    },
+    {
+      "type": "variant-picker",
+      "name": "Variant Picker",
+      "settings": []
+    }
+  ],
   "disabled_on": {
     "groups": ["header", "footer"]
   }

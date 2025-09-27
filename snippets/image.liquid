@@ -28,6 +28,10 @@
 {% enddoc %}
 
 {% liquid
+  # Get selected variant's image if available
+  assign selected_variant = product.selected_or_first_available_variant
+  assign image = selected_variant.featured_image | default: product.featured_image
+
   unless height
     assign width = width | default: image.width
   endunless
@@ -48,6 +52,7 @@
   {{ image | image_url: width: width, height: height, crop: crop | image_tag }}
 </{{ wrapper }}>
 
+
 {% stylesheet %}
   .image {
     display: block;
@@ -62,3 +67,34 @@
     height: auto;
   }
 {% endstylesheet %}
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const productForm = document.querySelector('form[action*="/cart/add"]');
+  const productImage = document.querySelector('[data-product-image]');
+  
+  if (!productForm || !productImage) return;
+
+  productForm.addEventListener('change', async (event) => {
+    // Find selected variant ID
+    const formData = new FormData(productForm);
+    const selectedVariantId = formData.get('id');
+
+    if (!selectedVariantId) return;
+
+    // Fetch product data from Shopify
+    const handle = '{{ product.handle }}';
+    const response = await fetch(`/products/${handle}.js`);
+    const product = await response.json();
+
+    // Find selected variant in product data
+    const selectedVariant = product.variants.find(v => v.id == selectedVariantId);
+
+    if (selectedVariant && selectedVariant.featured_image) {
+      productImage.src = selectedVariant.featured_image.src;
+      productImage.alt = selectedVariant.featured_image.alt || '{{ product.title }}';
+    }
+  });
+});
+</script>

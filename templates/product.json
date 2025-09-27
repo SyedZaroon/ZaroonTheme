@@ -11,10 +11,11 @@
   "sections": {
     "main": {
       "type": "main-product",
-      "settings": {}
+      "settings": {
+        "show_images": true
+      },
+
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["main"]
 }
