@@ -1,35 +1,32 @@
 {% assign current_variant = product.selected_or_first_available_variant %}
 
-<div class="variant-picker" data-product-id="{{ product.id }}">
+<variant-selects class="variant-picker" data-product-id="{{ product.id }}">
   {% for option in product.options_with_values %}
-    <fieldset class="variant-option" data-option-index="{{ forloop.index0 }}">
+    <fieldset class="variant-option">
       <legend class="variant-option__name">{{ option.name }}</legend>
       
       <div class="variant-option__values">
         {% for value in option.values %}
-          {% assign is_available = false %}
-          {% for variant in product.variants %}
-            {% if variant.options contains value and variant.available %}
-              {% assign is_available = true %}
-              {% break %}
-            {% endif %}
-          {% endfor %}
-
-          <button
-            type="button"
-            class="variant-value{% if current_variant.options contains value %} is-active{% endif %}{% unless is_available %} is-disabled{% endunless %}"
-            data-value="{{ value | escape }}"
-          >
+          <label for="{{ option.name | handleize }}-{{ value | handleize }}">
+            <input 
+              type="radio" 
+              name="option-{{ forloop.parentloop.index }}" 
+              value="{{ value }}" 
+              id="{{ option.name | handleize }}-{{ value | handleize }}"
+               {% if value.selected %}
+        checked
+      {% endif %}
+            >
             {{ value }}
-          </button>
+          </label>
         {% endfor %}
       </div>
     </fieldset>
   {% endfor %}
 
-  <!-- Hidden input that stores selected variant ID -->
-  <input type="hidden" name="id" value="{{ current_variant.id }}">
-</div>
+  <!-- Shopify uses this to know which variant to add to cart -->
+      <input type="hidden" name="id" id="hidden-id" value="{{ product.selected_or_first_available_variant.id }}">
+</variant-selects>
 
 
 <style>
@@ -80,65 +77,3 @@
 
 </style>
 
-
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-  const variantPicker = document.querySelector(".variant-picker");
-  if (!variantPicker) return;
-
-  const productData = JSON.parse(document.querySelector('[data-product-json]').textContent);
-  const hiddenInput = variantPicker.querySelector('input[name="id"]');
-  const addToCartButton = document.querySelector(".product-form__submit");
-  const priceContainer = document.querySelector(".product-price");
-  const inventoryContainer = document.querySelector(".product-inventory");
-
-  let selectedOptions = [...variantPicker.querySelectorAll(".variant-value.is-active")].map(btn => btn.dataset.value);
-
-  function updateVariant() {
-    const variant = productData.variants.find(v => JSON.stringify(v.options) === JSON.stringify(selectedOptions));
-
-    if (variant) {
-      hiddenInput.value = variant.id;
-
-      // Update price
-      if (priceContainer) {
-        priceContainer.innerHTML = Shopify.formatMoney(variant.price);
-      }
-
-      // Update inventory (if you have inventory block)
-      if (inventoryContainer) {
-        if (variant.available) {
-          inventoryContainer.textContent = variant.inventory_quantity > 10 
-            ? "✅ In stock"
-            : `⚠️ Only ${variant.inventory_quantity} left!`;
-        } else {
-          inventoryContainer.textContent = "❌ Out of stock";
-        }
-      }
-
-      // Enable/Disable ATC Button
-      if (addToCartButton) {
-        addToCartButton.disabled = !variant.available;
-        addToCartButton.textContent = variant.available ? "Add to Cart" : "Sold Out";
-      }
-    }
-  }
-
-  variantPicker.addEventListener("click", (e) => {
-    const button = e.target.closest(".variant-value");
-    if (!button || button.classList.contains("is-disabled")) return;
-
-    const fieldset = button.closest(".variant-option");
-    const buttons = fieldset.querySelectorAll(".variant-value");
-    buttons.forEach(b => b.classList.remove("is-active"));
-    button.classList.add("is-active");
-
-    // Update selected options array
-    const index = parseInt(fieldset.dataset.optionIndex);
-    selectedOptions[index] = button.dataset.value;
-
-    updateVariant();
-  });
-});
-
-</script>
