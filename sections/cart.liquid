@@ -1,37 +1,84 @@
 {% comment %}
-  This section is used in the cart template to render /cart page with an
-  overview of the items in customer's cart.
-
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/cart
+Custom Stylish Cart Page
 {% endcomment %}
+<section class="cart-page max-w-5xl mx-auto px-4 py-10">
+  <h1 class="text-3xl font-bold mb-8 text-center">Your Shopping Cart</h1>
 
-<h1>{{ 'cart.title' | t }}</h1>
+  {% if cart.item_count > 0 %}
+    <form action="/cart" method="post" novalidate class="cart-form grid md:grid-cols-3 gap-8">
+      
+      <!-- Cart Items -->
+      <div class="cart-items md:col-span-2 space-y-6">
+        {% for item in cart.items %}
+          <div class="cart-item flex gap-4 bg-white shadow-md p-4 rounded-2xl items-center">
+            <a href="{{ item.url }}">
+              <img src="{{ item.image | img_url: '200x' }}" alt="{{ item.title }}" class="w-24 h-24 object-cover rounded-xl">
+            </a>
 
-<form action="{{ routes.cart_url }}" method="post">
-  <table>
-    {% for item in cart.items %}
-      <tr>
-        <td>
-          {% render 'image', image: item.image, url: item.url %}
-        </td>
-        <td>
-          <p>{{ item.product.title }}</p>
-          {{ 'cart.remove' | t | link_to: item.url_to_remove }}
-        </td>
-        <td>
-          <input type="text" name="updates[]" value="{{ item.quantity }}">
-          <input type="submit" value="{{ 'cart.update' | t }}">
-        </td>
-      </tr>
-    {% endfor %}
-  </table>
+            <div class="flex-1">
+              <h2 class="font-semibold text-lg"><a href="{{ item.url }}">{{ item.product.title }}</a></h2>
+              <p class="text-gray-600 text-sm">{{ item.variant.title }}</p>
 
-  <input type="submit" name="checkout" value="{{ 'cart.checkout' | t }}">
-</form>
+              <div class="flex items-center gap-3 mt-2">
+                <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" class="w-16 border rounded-lg text-center">
+                <span class="font-bold">{{ item.line_price | money }}</span>
+              </div>
+            </div>
 
-{% schema %}
-{
-  "name": "t:general.cart",
-  "settings": []
+            <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0" class="text-red-600 hover:underline">
+              Remove
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Cart Summary -->
+      <div class="cart-summary bg-gray-50 shadow-md p-6 rounded-2xl flex flex-col justify-between">
+        <div>
+          <h3 class="text-xl font-semibold mb-4">Order Summary</h3>
+          <p class="flex justify-between text-lg mb-2">
+            <span>Subtotal:</span>
+            <span>{{ cart.total_price | money }}</span>
+          </p>
+          {% if cart.total_discounts > 0 %}
+            <p class="flex justify-between text-green-600 text-sm">
+              <span>Savings:</span>
+              <span>-{{ cart.total_discounts | money }}</span>
+            </p>
+          {% endif %}
+          <p class="text-gray-500 text-sm">Shipping & taxes calculated at checkout.</p>
+        </div>
+
+        <div class="mt-6 flex flex-col gap-3">
+          <button type="submit" name="update" class="bg-gray-200 hover:bg-gray-300 text-black font-semibold py-3 rounded-xl">
+            Update Cart
+          </button>
+          <button type="submit" name="checkout" class="bg-black hover:bg-gray-800 text-white font-bold py-3 rounded-xl">
+            Checkout
+          </button>
+        </div>
+      </div>
+    </form>
+  {% else %}
+    <div class="text-center py-20">
+      <h2 class="text-2xl font-semibold mb-4">Your cart is empty</h2>
+      <a href="{{ routes.all_products_collection_url }}" class="bg-black text-white py-3 px-6 rounded-xl hover:bg-gray-800">
+        Continue Shopping
+      </a>
+    </div>
+  {% endif %}
+</section>
+
+<style>
+.cart-page {
+  font-family: system-ui, sans-serif;
+  background: #f9fafb;
 }
-{% endschema %}
+.cart-item {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.cart-item:hover {
+  transform: scale(1.01);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+</style>
